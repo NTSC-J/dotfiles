@@ -1,0 +1,10 @@
+precmd() {
+    if [[ ! -e ~/.quiet_mode ]]; then
+        if [[ $? == "0" ]]; then
+            (timeout 1 espeak OK -a 10 &) > /dev/null
+        else
+            (timeout 1 espeak "OK?" -a 10 &) > /dev/null
+        fi
+    fi
+}
+

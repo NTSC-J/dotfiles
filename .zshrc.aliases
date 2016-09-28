@@ -1,0 +1,140 @@
+function runc() 
+{
+	clang -O2 -lm -std=c99 $CFLAGS $1 &&
+	shift &&
+    echo "Finished compiling." > /dev/stderr &&
+	./a.out $@;
+	rm -f ./a.out 
+}
+alias -s c=runc
+
+function runcpp()
+{
+	clang++ -O2 -std=c++11 $1 &&
+	shift &&
+    echo "Finished compiling." > /dev/stderr &&
+	./a.out $@;
+	rm -f ./a.out
+}
+alias -s cpp=runcpp
+
+alias -s {jpg,JPG,png,PNG,bmp,BMP}=display
+alias -s {mp3,aac,ogg,mp4,flv,avi,wmv,m4a}=mplayer
+alias -s {wav,WAV}=aplay
+alias -s {exe,EXE}=wine
+alias -s jar=java -jar
+alias -s {pdf,PDF}=mupdf
+
+function playflac() {
+    for file in $@
+    do
+        echo Playing $file
+        flac -dcs $file | aplay -q
+    done
+}
+alias -s flac=playflac
+
+function makem4a() {
+    for file in $@
+    do
+        ffmpeg -i $file -c:a libfdk_aac -vbr 5 -cutoff 18000 -map_metadata 0 ${file:r}.m4a
+    done
+}
+
+function makemp3() {
+    for file in $@
+    do
+        ffmpeg -i $file -c:a libmp3lame -b:a 320k -map_metadata 0 ${file:r}.mp3
+    done
+}
+
+function texpdf() {
+    echo "Compiling with pLaTeX... " &&
+    platex $1 &&
+    echo -n "Converting .dvi into .pdf... " &&
+    dvipdf `basename $1 .tex`.dvi &&
+    echo "done" &&
+    echo -n "Removing files... " &&
+    rm  `basename $1 .tex`.dvi `basename $1 .tex`.log `basename $1 .tex`.aux &&
+    echo "done"
+}
+
+function viewdvi() {
+    echo -n "Converting .dvi into .pdf... " &&
+    dvipdf $1 &&
+    echo "done"
+    mupdf `basename $1 .dvi`.pdf &&
+    rm `basename $1 .dvi`.pdf 
+}
+alias -s dvi=viewdvi
+
+function viewlatex() {
+    texpdf $1 &&
+    mupdf `basename $1 .tex`.pdf &&
+}
+function viewxetex() {
+    pdfname=`basename $1 .tex `.pdf
+    xelatex $1 &&
+    echo `pdftotext $pdfname - | wc -m` chars &&
+    mupdf $pdfname
+}
+alias -s tex=viewxetex
+
+alias -s plt="gnuplot -c"
+
+function rippsx() {
+    gamename=$1
+    cdrdao read-cd --read-raw --read-subchan rw_raw --datafile ${gamename}.bin --device /dev/sr0 --driver generic-mmc-raw ${gamename}.toc
+    toc2cue ${gamename}.toc ${gamename}.cue
+}
+
+function ripcdda-wv() {
+    dest="`pwd`"
+    while [ -z "`ls -a ${dest}`" ]; do
+        echo "${dest} is not empty. trying ${dest}/cdrip"
+        dest="${dest}/cdrip"
+        mkdir "${dest}"
+    done
+    temp="`mktemp -d`"
+    cd "${temp}"
+    cdparanoia -vB
+    for f in *.wav; do
+        wavpack -hvx "$f"
+        rm "$f"
+        cp `basename "$f" .wav`.wv "${dest}"
+    done
+    cd "${dest}"
+    rm -rf "${temp}"
+}
+function ripcdda-flac() {
+    dest="`pwd`"
+    while [ -z "`ls -a ${dest}`" ]; do
+        echo "${dest} is not empty. trying ${dest}/cdrip"
+        dest="${dest}/cdrip"
+        mkdir "${dest}"
+    done
+    temp="`mktemp -d`"
+    cd "${temp}"
+    cdparanoia -vB
+    for f in *.wav; do
+        flac --best "$f"
+        rm "$f"
+        cp `basename "$f" .wav`.flac "${dest}"
+    done
+    cp *.flac "${dest}"
+    cd "${dest}"
+    rm -rf "${temp}"
+}
+function nhdo()
+{
+    (nohup $1 >/dev/null 2>&1 &) >/dev/null 2>&1
+}
+
+alias less='less -r'
+alias ls='ls --color=yes'
+alias ll="ls -lh"
+alias sudo="sudo "
+alias info="info --vi-keys"
+alias pareload="pacmd unload-module module-udev-detect && pacmd load-module module-udev-detect"
+alias mpv="mpv -gapless-audio --no-audio-display"
+
