@@ -1,0 +1,11 @@
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+
+export XMODIFIERS="@im=fcitx"
+export QT_IM_MODULE=fcitx
+export GTK_IM_MODULE=fcitx
+
+fcitx &
+display -window root /usr/share/wallpapers/Gentoo10_purple/contents/images/1024x600.jpg &
+xscreensaver -nosplash &
+redshift &
+

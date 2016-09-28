@@ -1,0 +1,4 @@
+source ~/.xprofile
+
+exec fvwm
+
