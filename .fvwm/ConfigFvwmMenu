@@ -1,0 +1,147 @@
+# The window Ops menus exhibit a different HotKey style.
+# There are 2 versions of the WindowOps Menu, meant to be bound to different
+# things.  Here is the "common" part:
+DestroyFunc FuncFvwmWindowCommon
+AddToFunc FuncFvwmWindowCommon
++ I AddToMenu $0 "$[gt.&Move]"              Move
++ I AddToMenu $0 "$[gt.&Resize]"            Resize
++ I AddToMenu $0 "$[gt.R&aise]"             Raise
++ I AddToMenu $0 "$[gt.&Lower]"             Lower
++ I AddToMenu $0 "$[gt.(De)&Iconify]"       Iconify
++ I AddToMenu $0 "$[gt.(Un)&Stick]"         Stick
++ I AddToMenu $0 "$[gt.(Un)Ma&ximize]"      Maximize
++ I AddToMenu $0 ""                 Nop
++ I AddToMenu $0 "$[gt.&Delete]"            Delete
++ I AddToMenu $0 "$[gt.&Close]"             Close
++ I AddToMenu $0 "$[gt.Destroy]"            Destroy
++ I AddToMenu $0 ""                 Nop
+
+######################## Menus ###################
+DestroyMenu MenuFvwmRoot
+AddToMenu MenuFvwmRoot  "$[gt.Root Menu]"             Title
++                       "&T. $[gt.Terminals]"         Popup MenuFvwmTerminals
++                       "&B. $[gt.Browsers]"          Popup MenuFvwmBrowsers
++                       "&U. $[gt.Utilities]"         Popup MenuFvwmUtilities
++                       "&G. $[gt.Games]"             Popup MenuFvwmGames
++                       ""              Nop
++                       "&M. $[gt.Fvwm Modules]"      Popup MenuFvwmModules
++                       "&W. $[gt.Fvwm Window Ops]"   Popup MenuFvwmWindowOps
++                       ""              Nop
++                       "&F. $[gt.Refresh Screen]"   Refresh
++                       "&C. $[gt.Recapture Screen]" Recapture
++                       ""              Nop
++                       "&X. $[gt.Exit Fvwm]" Popup MenuFvwmQuitVerify
+
+DestroyMenu MenuFvwmTerminals
+AddToMenu MenuFvwmTerminals     "$[gt.Terminals]" Title
++                       "&1. Xterm"            Exec exec xterm
++                       "&2. Sakura"           Exec exec sakura
+
+DestroyMenu MenuFvwmBrowsers
+AddToMenu MenuFvwmBrowsers      "$[gt.Browsers]" Title
++                       "&1. Dillo"            Exec exec dillo
++                       "&2. NetSurf"          Exec exec netsurf-gtk
++                       "&3. Firefox (bin)"    Exec exec firefox-bin
++                       "&4. QupZilla"         Exec exec qupzilla
+
+DestroyMenu MenuFvwmUtilities
+AddToMenu MenuFvwmUtilities     "$[gt.Utilities]" Title
++                       "&T. Htop"       Exec exec xterm -T Htop -n Htop -e htop
++                       "&C. Calculator" Exec exec xcalc
++                       "&M. Xman"      Exec exec xman
++                       "&P. QPDFView"  Exec exec qpdfview
++                       "&S. SMPlayer"  Exec exec smplayer
++                       "&D. XScreenSaver Demo" Exec exec xscreensaver-demo
++                       ""              Nop
++                       "&A. Xmh Mail"  FuncFvwmMailXmh xmh "-font fixed"
++                       ""              Nop
++                       "&L. XLock"     Exec exec xlock -mode random
++                       ""              Nop
++                       "&D. $[gt.Reset X defaults]" Exec xrdb -load $HOME/.Xdefaults
+
+DestroyMenu MenuFvwmGames
+AddToMenu MenuFvwmGames "$[gt.Games]" Title
++ "&N. Noiz2sa"   Exec exec noiz2sa
++ "&R. RRootage"  Exec exec rrootage
++ "&S. SNES9x"    Exec exec snes9x-gtk
++ "&T. Sound of Sorting" Exec exec sound-of-sorting
++ "&U. Super Hexagon"    Exec exec super-hexagon
++ "&V. Syobon"    Exec exec syobon
++ "&W. Word War Vi" Exec exec sh -c "cd /usr/share/games/wordwarvi; wordwarvi --fullscreen"
++ "&J. XJump"     Exec exec xjump
++ "&K. XTris"     Exec exec xtris
+
+# First windowops menu, bound to:
+# mouse 2 on root
+# Root menu
+DestroyMenu MenuFvwmWindowOps
+AddToMenu MenuFvwmWindowOps     "$[gt.Window Ops]"    Title
+FuncFvwmWindowCommon MenuFvwmWindowOps
++ "$[gt.Re&fresh Window]" RefreshWindow
+
+# Second windowops menu, bound to:
+# any mouse on titlebar button 1
+# mouse 2 on frame, side or titlebar
+DestroyMenu MenuFvwmWindowOps2
+AddToMenu MenuFvwmWindowOps2
+FuncFvwmWindowCommon MenuFvwmWindowOps2
++ Scroll&Bar       Module FvwmScroll 2 2
++ "&$[gt.Print]"           FuncFvwmPrint
++ "$[gt.Print Re&verse]" FuncFvwmPrintReverse
+
+DestroyMenu MenuFvwmModules
+AddToMenu MenuFvwmModules "$[gt.Fvwm Modules]"        Title
++ "&1. $[gt.Control Animation]" Popup  MenuFvwmAnimate
++ "&B. Button-Bar"        Module FvwmButtons
++ "&O. IconBox"           FuncFvwmConfigureIconBox
++ "&F. Forms"             Popup  MenuFvwmForms
++ "&I. Identify"          Module FvwmIdent
++ "&M. IconMan"           Module FvwmIconMan
++ "&N. Banner"            Module FvwmBanner
++ "&C. Console"           Module FvwmConsole
++ "&P. Pager"             Module FvwmPager 0 0
++ "&2. Pager (2 $[gt.desks])"   Module FvwmPager 0 1
++ "&R. Backer"            Module FvwmBacker
++ "&S. ScrollBar"         Module FvwmScroll 50 50
++ "&T. FvwmTaskBar"       Module FvwmTaskBar
++ "&U. AutoRaise"         Module FvwmAuto 200 Raise Nop
++ "&W. WinList"           Module FvwmWinList
++ "&X. $[gt.Stop Module Menu]"  Popup  MenuFvwmStopModule
+
+DestroyMenu MenuFvwmStopModule
+AddToMenu MenuFvwmStopModule "$[gt.Stop Fvwm Modules]" Title
++ "&B. $[gt.Stop] Button-Bar"  KillModule FvwmButtons
++ "&O. $[gt.Stop] IconBox"     KillModule FvwmIconBox
++ "&M. $[gt.Stop] IconMan"     KillModule FvwmIconMan
++ "&P. $[gt.Stop] Pager"       KillModule FvwmPager
++ "&R. $[gt.Stop] Backer"      KillModule FvwmBacker
++ "&S. $[gt.Stop] ScrollBar"   KillModule FvwmScroll
++ "&T. $[gt.Stop] FvwmTaskBar" KillModule FvwmTaskBar
++ "&U. $[gt.Stop] AutoRaise"   KillModule FvwmAuto
++ "&W. $[gt.Stop] WinList"     KillModule FvwmWinList
+
+DestroyMenu MenuFvwmForms
+AddToMenu MenuFvwmForms
++ "&C. Capture"       Module FvwmForm FvwmForm-Capture
++ "&D. Form Defaults" Module FvwmForm FvwmForm-Form
++ "&R. Rlogin"        Module FvwmForm FvwmForm-Rlogin
++ "&P. RootCursor"    Module FvwmForm FvwmForm-RootCursor
++ "&S. Setup"         Module FvwmForm FvwmForm-Setup
++ "&T. Talk Form"     Module FvwmForm FvwmForm-Talk
++ "&Q. QuitVerify"    Module FvwmForm FvwmForm-QuitVerify
+
+DestroyMenu MenuFvwmQuitVerify
+AddToMenu MenuFvwmQuitVerify "$[gt.Really Quit Fvwm?]" Title
++ "&Q. $[gt.Yes, Really Quit]" Quit
++ ""                     Nop
++ "&R. $[gt.Restart]"          Restart
++ ""                     Nop
++ "&T. $[gt.Start] twm"        Restart twm
++ "&C. $[gt.Start] ctwm"       Restart ctwm
++ "&2. $[gt.Start] tvtwm"      Restart tvtwm
++ "&V. $[gt.Start] vtwm"       Restart vtwm
++ "&M. $[gt.Start] mwm"        Restart mwm
++ "&O. $[gt.Start] olwm"       Restart /usr/openwin/bin/olwm
++ ""                     Nop
++ "&X. $[gt.Just an Xterm]"    Restart xterm -n '"X Console"' -T '"X Console"'
+
