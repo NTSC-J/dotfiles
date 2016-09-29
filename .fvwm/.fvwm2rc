@@ -147,4 +147,5 @@ read ConfigFvwmTaskBar
 read ConfigFvwmWinList
 
 read ConfigFvwmMenu
+read ConfigFvwmKeys
 
