@@ -129,6 +129,10 @@ function nhdo()
 {
     (nohup $1 >/dev/null 2>&1 &) >/dev/null 2>&1
 }
+function mkudf-bdsl()
+{
+    truncate --size 24438784KB $1 && /usr/sbin/mkudffs --utf8 $1
+}
 
 alias less='less -r'
 alias ls='ls --color=yes'

@@ -26,5 +26,5 @@ source ~/.zshrc.preexec
 date
 uptime
 acpi
-fortune | cowsay -n
+fortune | fold -s -w76 | cowsay -n
 
