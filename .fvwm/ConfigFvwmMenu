@@ -18,46 +18,65 @@ AddToFunc FuncFvwmWindowCommon
 
 ######################## Menus ###################
 DestroyMenu MenuFvwmRoot
-AddToMenu MenuFvwmRoot  "$[gt.Root Menu]"             Title
-+                       "&T. $[gt.Terminals]"         Popup MenuFvwmTerminals
-+                       "&B. $[gt.Browsers]"          Popup MenuFvwmBrowsers
-+                       "&U. $[gt.Utilities]"         Popup MenuFvwmUtilities
-+                       "&G. $[gt.Games]"             Popup MenuFvwmGames
-+                       ""              Nop
-+                       "&M. $[gt.Fvwm Modules]"      Popup MenuFvwmModules
-+                       "&W. $[gt.Fvwm Window Ops]"   Popup MenuFvwmWindowOps
-+                       ""              Nop
-+                       "&F. $[gt.Refresh Screen]"   Refresh
-+                       "&C. $[gt.Recapture Screen]" Recapture
-+                       ""              Nop
-+                       "&X. $[gt.Exit Fvwm]" Popup MenuFvwmQuitVerify
+AddToMenu MenuFvwmRoot "$[gt.Root Menu]" Title
++ "&X. $[gt.XDG Menu]"          Popup FvwmMenu
++ "&T. $[gt.Terminals]"         Popup MenuFvwmTerminals
++ "&B. $[gt.Browsers]"          Popup MenuFvwmBrowsers
++ "&U. $[gt.Utilities]"         Popup MenuFvwmUtilities
++ "&D. $[gt.Development]"       Popup MenuFvwmDev
++ "&G. $[gt.Games]"             Popup MenuFvwmGames
++ "&M. $[gt.Music]"             Popup MenuFvwmMusic
++ ""              Nop
++ "&M. $[gt.Fvwm Modules]"      Popup MenuFvwmModules
++ "&W. $[gt.Fvwm Window Ops]"   Popup MenuFvwmWindowOps
++ ""              Nop
++ "&F. $[gt.Refresh Screen]"   Refresh
++ "&C. $[gt.Recapture Screen]" Recapture
++ ""              Nop
++ "&X. $[gt.Exit Fvwm]" Popup MenuFvwmQuitVerify
+
+AddToMenu FvwmMenu
++ DynamicPopupAction PipeRead 'fvwm-menu-desktop'
 
 DestroyMenu MenuFvwmTerminals
-AddToMenu MenuFvwmTerminals     "$[gt.Terminals]" Title
-+                       "&1. Xterm"            Exec exec xterm
-+                       "&2. Sakura"           Exec exec sakura
+AddToMenu MenuFvwmTerminals "$[gt.Terminals]" Title
++ "&1. Xterm"            Exec exec xterm
++ "&2. Sakura"           Exec exec sakura
 
 DestroyMenu MenuFvwmBrowsers
-AddToMenu MenuFvwmBrowsers      "$[gt.Browsers]" Title
-+                       "&1. Dillo"            Exec exec dillo
-+                       "&2. NetSurf"          Exec exec netsurf-gtk
-+                       "&3. Firefox (bin)"    Exec exec firefox-bin
-+                       "&4. QupZilla"         Exec exec qupzilla
+AddToMenu MenuFvwmBrowsers "$[gt.Browsers]" Title
++ "&1. Dillo"            Exec exec dillo
++ "&2. NetSurf"          Exec exec netsurf-gtk
++ "&3. Firefox"          Exec exec firefox
++ "&4. Firefox (bin)"    Exec exec firefox-bin
++ "&5. QupZilla"         Exec exec qupzilla
 
 DestroyMenu MenuFvwmUtilities
-AddToMenu MenuFvwmUtilities     "$[gt.Utilities]" Title
-+                       "&T. Htop"       Exec exec xterm -T Htop -n Htop -e htop
-+                       "&C. Calculator" Exec exec xcalc
-+                       "&M. Xman"      Exec exec xman
-+                       "&P. QPDFView"  Exec exec qpdfview
-+                       "&S. SMPlayer"  Exec exec smplayer
-+                       "&D. XScreenSaver Demo" Exec exec xscreensaver-demo
-+                       ""              Nop
-+                       "&A. Xmh Mail"  FuncFvwmMailXmh xmh "-font fixed"
-+                       ""              Nop
-+                       "&L. XLock"     Exec exec xlock -mode random
-+                       ""              Nop
-+                       "&D. $[gt.Reset X defaults]" Exec xrdb -load $HOME/.Xdefaults
+AddToMenu MenuFvwmUtilities "$[gt.Utilities]" Title
++ "&T. Htop"       Exec exec xterm -T Htop -n Htop -e htop
++ "&C. Calculator" Exec exec xcalc
++ "&M. Xman"      Exec exec xman
++ "&P. QPDFView"  Exec exec qpdfview
++ "&S. SMPlayer"  Exec exec smplayer
++ "&D. XScreenSaver Demo" Exec exec xscreensaver-demo
++ "&V. virt-manager" Exec exec gksudo virt-manager
++ ""              Nop
++ "&A. Xmh Mail"  FuncFvwmMailXmh xmh "-font fixed"
++ ""              Nop
++ "&L. XLock"     Exec exec xlock -mode random
++ ""              Nop
++ "&D. $[gt.Reset X defaults]" Exec xrdb -load $HOME/.Xdefaults
+
+DestroyMenu MenuFvwmMusic
+AddToMenu MenuFvwmMusic "$[gt.Musics]" Title
++ "&M. Mixxx" Exec exec mixxx
++ "&L. LMMS" Exec exec lmms
++ "&A. Ardour" Exec exec ardour5
+
+DestroyMenu MenuFvwmDev
+AddToMenu MenuFvwmDev "$[gt.Development]" Title
++ "&A. Android Studio" Exec exec android-studio
++ "&B. Android SDK Update Manager" Exec exec android
 
 DestroyMenu MenuFvwmGames
 AddToMenu MenuFvwmGames "$[gt.Games]" Title
