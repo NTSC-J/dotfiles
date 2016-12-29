@@ -19,7 +19,6 @@ AddToFunc FuncFvwmWindowCommon
 ######################## Menus ###################
 DestroyMenu MenuFvwmRoot
 AddToMenu MenuFvwmRoot "$[gt.Root Menu]" Title
-+ "&X. $[gt.XDG Menu]"          Popup FvwmMenu
 + "&T. $[gt.Terminals]"         Popup MenuFvwmTerminals
 + "&B. $[gt.Browsers]"          Popup MenuFvwmBrowsers
 + "&U. $[gt.Utilities]"         Popup MenuFvwmUtilities
@@ -34,9 +33,6 @@ AddToMenu MenuFvwmRoot "$[gt.Root Menu]" Title
 + "&C. $[gt.Recapture Screen]" Recapture
 + ""              Nop
 + "&X. $[gt.Exit Fvwm]" Popup MenuFvwmQuitVerify
-
-AddToMenu FvwmMenu
-+ DynamicPopupAction PipeRead 'fvwm-menu-desktop'
 
 DestroyMenu MenuFvwmTerminals
 AddToMenu MenuFvwmTerminals "$[gt.Terminals]" Title
