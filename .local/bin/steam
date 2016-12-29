@@ -1,0 +1,5 @@
+#!/bin/bash
+
+WINEPREFIX="${HOME}/.local/share/wineprefixes/steam"
+exec wine "${WINEPREFIX}/drive_c/Program Files/Steam/Steam.exe"
+
