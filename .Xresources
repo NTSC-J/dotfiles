@@ -1,0 +1,11 @@
+XTerm.vt100.reverseVideo: true
+xterm*font: *-fixed-*-*-*-20-*
+
+Xft.dpi: 180
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+

@@ -1,0 +1,19 @@
+xrdb ~/.Xresources
+synclient ClickFinger3=2
+synclient TapButton3=2
+setxkbmap -layout jp -model jp106
+#compton &
+redshift -l 36.11143:140.10383 &
+
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export GDK_SCALE=2
+export GDK_DPI_SCALE=0.58
+export ELM_SCALE=2.0
+
+export GTK_IM_MODULE=xim
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+ibus-daemon -drx &
+xmodmap ~/.Xmodmap &
+exec enlightenment_start
+
